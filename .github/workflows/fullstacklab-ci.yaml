@@ -1,0 +1,38 @@
+name: fullstacklab-ci
+
+on:
+    pull_request:
+      branches:
+        - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps: 
+        - name: checkout full stack code 
+          uses: actions/checkout@v4
+
+        - uses: actions/node-setup@v4
+          with: 
+            node-version: 15
+        
+        - name: Install npm depnedencies
+          run: npm install 
+
+        - name: Linter the code 
+          run: npm run lint
+          
+        - name: Format the code 
+          run: npm prettier --write .
+
+        - name: Test the code 
+          run: npm run test -- --ci
+
+        - name: Buld the code 
+          run: npm run build 
+
+        - uses: actions/upload-artifact@v4
+          with: 
+            name: fullstacklab-artifact
+            folder: build
