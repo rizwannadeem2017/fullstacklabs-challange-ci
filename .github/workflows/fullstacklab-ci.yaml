@@ -24,7 +24,7 @@ jobs:
           run: npm run lint
           
         - name: Format the code 
-          run: npm prettier --write .
+          run: npx prettier --write .
 
         - name: Test the code 
           run: npm run test -- --ci
